@@ -1,0 +1,65 @@
+﻿@model CrisisManagementPlatform.Models.Crisis
+
+@{
+    ViewData["Title"] = "تسجيل أزمة جديدة";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+                <div class="card-header bg-gradient bg-primary text-white py-3 px-4">
+                    <h5 class="mb-0 fw-bold"><i class="bi bi-shield-plus me-2"></i> تسجيل أزمة جديدة في النظام</h5>
+                </div>
+                <div class="card-body p-4 p-md-5">
+                    <form asp-action="Create" method="post">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger rounded-3 mb-4" role="alert"></div>
+
+                        <div class="mb-4">
+                            <label asp-for="Title" class="form-label fw-semibold text-secondary">عنوان الأزمة</label>
+                            <input asp-for="Title" class="form-control form-control-lg rounded-3 fs-6" placeholder="أدخل عنواناً واضحاً وموجزاً للأزمة..." />
+                            <span asp-validation-for="Title" class="text-danger small mt-1 d-block"></span>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <label asp-for="CrisisCategoryId" class="form-label fw-semibold text-secondary">تصنيف الأزمة</label>
+                                <select asp-for="CrisisCategoryId" class="form-select form-select-lg rounded-3 fs-6" asp-items="@(new SelectList(ViewBag.Categories, "CrisisCategoryId", "Name"))">
+                                    <option value="">-- اختر التصنيف المناسب --</option>
+                                </select>
+                                <span asp-validation-for="CrisisCategoryId" class="text-danger small mt-1 d-block"></span>
+                            </div>
+
+                            <div class="col-md-6 mb-4">
+                                <label asp-for="StartDate" class="form-label fw-semibold text-secondary">تاريخ البدء</label>
+                                <input asp-for="StartDate" type="date" class="form-control form-control-lg rounded-3 fs-6" />
+                                <span asp-validation-for="StartDate" class="text-danger small mt-1 d-block"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="Description" class="form-label fw-semibold text-secondary">وصف تفصيلي للأزمة</label>
+                            <textarea asp-for="Description" class="form-control rounded-3" rows="4" placeholder="اكتب تفاصيل الأزمة، النطاق الجغرافي، والمعلومات الأولية..."></textarea>
+                            <span asp-validation-for="Description" class="text-danger small mt-1 d-block"></span>
+                        </div>
+
+                        <div class="d-flex align-items-center justify-content-between pt-3 border-top">
+                            <a asp-action="Index" class="btn btn-light px-4 rounded-pill text-secondary fw-semibold">
+                                <i class="bi bi-arrow-right me-1"></i> العودة للقائمة
+                            </a>
+                            <button type="submit" class="btn btn-primary px-5 rounded-pill fw-semibold shadow-sm">
+                                <i class="bi bi-check-lg me-1"></i> حفظ وتسجيل
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
